@@ -1,0 +1,92 @@
+﻿@page "/SignUpPage"
+@using System.Text.Json.Serialization
+@using System.Text.Json
+@using System.Text
+@using TodoList.Database
+@using TodoList.Services
+
+@using TodoList.Shared
+@inject NavigationManager NavManager
+@layout DashboardLayout
+<style>
+    input:focus {
+        border-color: #228B22 !important;
+        box-shadow: 0 0 5px rgba(34, 139, 34, 0.5) !important;
+    }
+
+    h1.title {
+        text-align: center;
+        font-size: 80px;
+        font-weight: bold;
+        background: linear-gradient(to right, #228B22, #fff);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+</style>
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card mt-4">
+                <div class="card-header text-center" style="background-color: #228B22; color: #fff; margin-top: 10px;">
+                    <h4>Sign Up</h4>
+                </div>
+                <div class="card-body">
+                    <EditForm Model="@user" OnValidSubmit="@onsubmit">
+                        <DataAnnotationsValidator />
+                        <div class="form-group" style="margin-top: 10px;">
+                            <label for="username">UserName</label>
+                            <input type="text" class="form-control" id="username" @bind="user.UserName" placeholder="Enter your username" required>
+                        </div>
+                        <div class="form-group" style="margin-top: 10px;">
+                            <label for="Email">Email</label>
+                            <input type="text" class="form-control" id="email" @bind="user.Email" placeholder="Enter your email" required>
+                        </div>
+                        <div class="form-group" style="margin-top: 10px;">
+                            <label for="password">Password</label>
+                            <input type="password" class="form-control" id="password" @bind="user.Password" placeholder="Enter your password" required>
+                        </div>
+                        <div class="form-group mb-4" style="margin-top: 10px;">
+                            <button type="submit" class="btn btn-success btn-block" style="background-color: #228B22;" >
+                                Sign Up
+                            </button>
+                        </div>
+                    </EditForm>
+                </div>
+                <div class="card-footer text-center" style="margin-top: 10px;">
+                    <p>have an account? <a href="/" data-toggle="collapse">Sign In</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal" id="signupModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header" style="background-color: #228B22; color: #fff; margin-top: 10px;">
+                <h5 class="modal-title">Sign Up</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>Signup form can be placed here...</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+@code {
+    UserDto user = new UserDto();
+
+    public async Task onsubmit()
+    {
+        User? GetUser = UserLogin.SignUp(user);
+        if (GetUser != null)
+        {
+            NavManager.NavigateTo("/Dashboard");
+        }
+    }
+
+}

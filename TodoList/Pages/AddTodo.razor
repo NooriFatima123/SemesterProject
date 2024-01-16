@@ -1,0 +1,86 @@
+﻿@page "/AddTodo"
+@using TodoList.Database
+@using TodoList.Models
+@using TodoList.Services
+@using Microsoft.AspNetCore.Components.Server.ProtectedBrowserStorage
+@inject ProtectedSessionStorage ProtectedSessionStore
+<style>
+    input:focus {
+        border-color: #228B22 !important;
+        box-shadow: 0 0 5px rgba(34, 139, 34, 0.5) !important;
+    }
+</style>
+<section class="vh-100">
+    <div class="container py-5 h-100">
+        <div class="row d-flex  h-100">
+            <div class="col">
+                <div class="card" id="list1" style="border-radius: .75rem; background-color: #eff1f2;">
+                    <div class="card-body py-4 px-4 px-md-5">
+
+                        <p class="h1 text-center mt-3 mb-4 pb-3 " style="color:#228B22;">
+                            <i class="fas fa-check-square me-1"></i>
+                            <u>Add List</u>
+                        </p>
+                        <EditForm Model="@todo" OnValidSubmit="@onsubmit">
+                        <div class="pb-2">
+                                <div class="card-body">
+                                    <div class="align-items-center">
+                                        
+                                        <input type="text" class="form-control form-control-lg" id="desc" @bind="todo.Desc"
+                                               placeholder="Add new...">
+                                          <br />
+                                        <div>
+                                            <button type="submit" class="btn btn-primary" style="background-color: #228B22;">Add</button>
+                                        </div>
+                                        
+                                    </div>
+                                
+                            </div>
+                        </div>
+                        </EditForm>
+
+                       @*  <div class="d-flex justify-content-end align-items-center mb-4 pt-2 pb-3">
+                            <p class="small mb-0 me-2 text-muted">Filter</p>
+                            <select class="select">
+                                <option value="1">All</option>
+                                <option value="2">Completed</option>
+                                <option value="3">Active</option>
+                                <option value="4">Has due date</option>
+                            </select>
+                            <p class="small mb-0 ms-4 me-2 text-muted">Sort</p>
+                            <select class="select">
+                                <option value="1">Added date</option>
+                                <option value="2">Due date</option>
+                            </select>
+                            <a href="#!" style="color: #23af89;" data-mdb-toggle="tooltip" title="Ascending">
+                                <i class="fas fa-sort-amount-down-alt ms-2"></i>
+                            </a>
+                        </div> *@
+                       
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+@code{
+
+    TodoDto todo=new TodoDto();
+    List<Todo>? todoList;
+    protected override void OnInitialized()
+    {
+        todoList=TodoServices.getAllToday(UserLogin.user.UserId);
+        base.OnInitialized();
+    }
+    public async Task  onsubmit()
+    {
+        todo.ListId = 1;
+        Todo? getTodo = TodoServices.AddTodo(todo);
+
+        if (getTodo != null)
+        {
+            StateHasChanged();
+           
+        }
+    }
+}

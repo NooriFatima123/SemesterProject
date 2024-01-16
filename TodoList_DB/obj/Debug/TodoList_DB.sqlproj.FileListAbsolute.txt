@@ -1,0 +1,6 @@
+E:\Projects\TodoList\TodoList_DB\bin\Debug\TodoList_DB.dacpac
+E:\Projects\TodoList\TodoList_DB\bin\Debug\TodoList_DB.dll
+E:\Projects\TodoList\TodoList_DB\bin\Debug\TodoList_DB.pdb
+E:\Projects\TodoList\TodoList_DB\obj\Debug\TodoList_DB.sqlproj.AssemblyReference.cache
+E:\Projects\TodoList\TodoList_DB\obj\Debug\TodoList_DB.dll
+E:\Projects\TodoList\TodoList_DB\obj\Debug\TodoList_DB.pdb
